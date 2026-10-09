@@ -1,0 +1,36 @@
+{
+ "timeouts": [
+  1.9647749999999842,
+  1.972249999999958
+ ],
+ "teleop": {
+  "tempo": 0.72,
+  "omega": 15.384615384615383,
+  "p_pause": 0.35,
+  "tempo_jitter": 0.25
+ },
+ "feed_default": {
+  "speed": 1.0,
+  "lead": 0.03,
+  "period": 0.08,
+  "blend": true,
+  "blend_life": 1.2,
+  "blend_tau": 1.0,
+  "expire": false,
+  "vlim": 1.5,
+  "alim": 6.0,
+  "anchor": "state",
+  "delta_demo": 0.08,
+  "adaptive_speed": 1.0,
+  "adaptive_window": 10,
+  "arm_shift": 0.0
+ },
+ "mean_plan_age": [
+  0.5066512969544454
+ ],
+ "s_star_pred": {
+  "0.08": 1.06,
+  "0.13": 1.1600000000000001,
+  "0.18": 1.26
+ }
+}

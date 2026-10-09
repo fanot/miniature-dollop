@@ -1,0 +1,41 @@
+--- a/submission/patches/action_feed.py	2026-10-09 13:10:15.139377786 +0300
++++ b/submission/patches/action_feed.py	2026-10-09 13:10:15.165850625 +0300
+@@ -115,6 +115,17 @@
+     adaptive_window: int = 10
+     """Rows kept at the trained pace on each side of such a row (10 rows = 0.33 s)."""
+ 
++    adaptive_detector: str = "row"
++    """How a grasp/release is found in a plan. ``row``: any finger moves more than
++    ``adaptive_threshold`` between two neighbouring rows (original). On *sampled* plans the
++    fingers jitter by about that much on every row, so nearly every row is flagged and adaptive
++    speed silently becomes 1x. ``net``: net finger travel across a centred window of
++    ``2*adaptive_net_span`` rows exceeds ``adaptive_net_threshold`` -- jitter cancels out, a real
++    closing (~0.5-1 rad) does not."""
++
++    adaptive_net_span: int = 4
++    adaptive_net_threshold: float = 0.15
++
+     latency: Optional[float] = None
+     """When a fresh plan takes effect, measured from its own observation.
+ 
+@@ -246,10 +257,18 @@
+         return None
+     if config.adaptive_threshold <= 0 or config.adaptive_window < 0:
+         raise ValueError("adaptive_threshold must be positive and adaptive_window non-negative")
+-    travel = np.abs(np.diff(np.asarray(fingers, dtype=np.float64), axis=0)).max(axis=1)
++    f = np.asarray(fingers, dtype=np.float64)
++    if config.adaptive_detector == "net":
++        k = max(1, int(config.adaptive_net_span))
++        pad = np.concatenate([np.repeat(f[:1], k, 0), f, np.repeat(f[-1:], k, 0)])
++        travel = np.abs(pad[2 * k:] - pad[:-2 * k]).max(axis=1)[1:]      # centred, aligned with diff
++        threshold = config.adaptive_net_threshold
++    else:
++        travel = np.abs(np.diff(f, axis=0)).max(axis=1)
++        threshold = config.adaptive_threshold
+     slow = np.zeros(len(fingers), dtype=bool)
+     window = int(config.adaptive_window)
+-    for j in np.flatnonzero(travel > config.adaptive_threshold) + 1:
++    for j in np.flatnonzero(travel > threshold) + 1:
+         slow[max(0, j - window): j + window + 1] = True
+     step = np.where(slow[1:], config.row_dt, config.row_dt / config.adaptive_speed)
+     times = np.empty(len(fingers), dtype=np.float64)

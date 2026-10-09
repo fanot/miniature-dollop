@@ -1,0 +1,282 @@
+[
+ {
+  "delta_sim": 0.08,
+  "speed": 0.8,
+  "blend_life": 1.2,
+  "measured": 0.7269507006056606,
+  "predicted": 0.7869331078137078
+ },
+ {
+  "delta_sim": 0.08,
+  "speed": 0.8,
+  "blend_life": 0.6,
+  "measured": 0.6728703134363567,
+  "predicted": 0.7796394277559793
+ },
+ {
+  "delta_sim": 0.08,
+  "speed": 1.0,
+  "blend_life": 1.2,
+  "measured": 0.9250314325100174,
+  "predicted": 0.9505396587971291
+ },
+ {
+  "delta_sim": 0.08,
+  "speed": 1.0,
+  "blend_life": 0.6,
+  "measured": 0.8781381709509921,
+  "predicted": 0.9226926596471869
+ },
+ {
+  "delta_sim": 0.08,
+  "speed": 1.15,
+  "blend_life": 1.2,
+  "measured": 1.0577772647770431,
+  "predicted": 1.0729602496255684
+ },
+ {
+  "delta_sim": 0.08,
+  "speed": 1.15,
+  "blend_life": 0.6,
+  "measured": 0.9953787935671166,
+  "predicted": 1.0293886115852817
+ },
+ {
+  "delta_sim": 0.08,
+  "speed": 1.3,
+  "blend_life": 1.2,
+  "measured": 1.1995844016026225,
+  "predicted": 1.1952179228374848
+ },
+ {
+  "delta_sim": 0.08,
+  "speed": 1.3,
+  "blend_life": 0.6,
+  "measured": 1.1275072368730257,
+  "predicted": 1.1357306266036735
+ },
+ {
+  "delta_sim": 0.08,
+  "speed": 1.5,
+  "blend_life": 1.2,
+  "measured": 1.4086807564765818,
+  "predicted": 1.3560716759094567
+ },
+ {
+  "delta_sim": 0.08,
+  "speed": 1.5,
+  "blend_life": 0.6,
+  "measured": 1.327466270861331,
+  "predicted": 1.2772469008054486
+ },
+ {
+  "delta_sim": 0.13,
+  "speed": 0.8,
+  "blend_life": 1.2,
+  "measured": 0.654154034048282,
+  "predicted": 0.7275181038939688
+ },
+ {
+  "delta_sim": 0.13,
+  "speed": 0.8,
+  "blend_life": 0.6,
+  "measured": 0.5631191155039178,
+  "predicted": 0.6916273711539643
+ },
+ {
+  "delta_sim": 0.13,
+  "speed": 1.0,
+  "blend_life": 1.2,
+  "measured": 0.8409964742238347,
+  "predicted": 0.8781503027913548
+ },
+ {
+  "delta_sim": 0.13,
+  "speed": 1.0,
+  "blend_life": 0.6,
+  "measured": 0.7506835188838098,
+  "predicted": 0.8173772271535267
+ },
+ {
+  "delta_sim": 0.13,
+  "speed": 1.15,
+  "blend_life": 1.2,
+  "measured": 0.962918830137532,
+  "predicted": 0.9908775018868549
+ },
+ {
+  "delta_sim": 0.13,
+  "speed": 1.15,
+  "blend_life": 0.6,
+  "measured": 0.8585506192976272,
+  "predicted": 0.9112136222117698
+ },
+ {
+  "delta_sim": 0.13,
+  "speed": 1.3,
+  "blend_life": 1.2,
+  "measured": 1.0916517181399938,
+  "predicted": 1.1034542495650774
+ },
+ {
+  "delta_sim": 0.13,
+  "speed": 1.3,
+  "blend_life": 0.6,
+  "measured": 0.976416319669404,
+  "predicted": 1.004740125885178
+ },
+ {
+  "delta_sim": 0.13,
+  "speed": 1.5,
+  "blend_life": 1.2,
+  "measured": 1.2663948848942268,
+  "predicted": 1.2515917641312548
+ },
+ {
+  "delta_sim": 0.13,
+  "speed": 1.5,
+  "blend_life": 0.6,
+  "measured": 1.12939310856108,
+  "predicted": 1.1292764173823655
+ },
+ {
+  "delta_sim": 0.18,
+  "speed": 0.8,
+  "blend_life": 1.2,
+  "measured": 0.5922522761900884,
+  "predicted": 0.6764451583822111
+ },
+ {
+  "delta_sim": 0.18,
+  "speed": 0.8,
+  "blend_life": 0.6,
+  "measured": 0.47635130921814645,
+  "predicted": 0.6214706913869188
+ },
+ {
+  "delta_sim": 0.18,
+  "speed": 1.0,
+  "blend_life": 1.2,
+  "measured": 0.7658689561047701,
+  "predicted": 0.816006464875495
+ },
+ {
+  "delta_sim": 0.18,
+  "speed": 1.0,
+  "blend_life": 0.6,
+  "measured": 0.6457447104454138,
+  "predicted": 0.7336401079165817
+ },
+ {
+  "delta_sim": 0.18,
+  "speed": 1.15,
+  "blend_life": 1.2,
+  "measured": 0.8802504985007111,
+  "predicted": 0.9204611206673304
+ },
+ {
+  "delta_sim": 0.18,
+  "speed": 1.15,
+  "blend_life": 0.6,
+  "measured": 0.7447106461591632,
+  "predicted": 0.8173777249840206
+ },
+ {
+  "delta_sim": 0.18,
+  "speed": 1.3,
+  "blend_life": 1.2,
+  "measured": 0.9989615118774489,
+  "predicted": 1.0247763449748293
+ },
+ {
+  "delta_sim": 0.18,
+  "speed": 1.3,
+  "blend_life": 0.6,
+  "measured": 0.8548046272452554,
+  "predicted": 0.9008408466019088
+ },
+ {
+  "delta_sim": 0.18,
+  "speed": 1.5,
+  "blend_life": 1.2,
+  "measured": 1.1554222191727,
+  "predicted": 1.1620597009017832
+ },
+ {
+  "delta_sim": 0.18,
+  "speed": 1.5,
+  "blend_life": 0.6,
+  "measured": 0.9918016920919299,
+  "predicted": 1.0120314418105816
+ },
+ {
+  "delta_sim": 0.23,
+  "speed": 0.8,
+  "blend_life": 1.2,
+  "measured": 0.5391702227575332,
+  "predicted": 0.6320726386337292
+ },
+ {
+  "delta_sim": 0.23,
+  "speed": 0.8,
+  "blend_life": 0.6,
+  "measured": 0.4105510242697205,
+  "predicted": 0.5642362031779271
+ },
+ {
+  "delta_sim": 0.23,
+  "speed": 1.0,
+  "blend_life": 1.2,
+  "measured": 0.7016864411897302,
+  "predicted": 0.7620767727757689
+ },
+ {
+  "delta_sim": 0.23,
+  "speed": 1.0,
+  "blend_life": 0.6,
+  "measured": 0.5622480136991543,
+  "predicted": 0.665465730891409
+ },
+ {
+  "delta_sim": 0.23,
+  "speed": 1.15,
+  "blend_life": 1.2,
+  "measured": 0.8076056373869535,
+  "predicted": 0.8593889311424574
+ },
+ {
+  "delta_sim": 0.23,
+  "speed": 1.15,
+  "blend_life": 0.6,
+  "measured": 0.6507489190701987,
+  "predicted": 0.7410637019290923
+ },
+ {
+  "delta_sim": 0.23,
+  "speed": 1.3,
+  "blend_life": 1.2,
+  "measured": 0.9191040186806895,
+  "predicted": 0.9565714025638994
+ },
+ {
+  "delta_sim": 0.23,
+  "speed": 1.3,
+  "blend_life": 0.6,
+  "measured": 0.753338975711128,
+  "predicted": 0.8164159973005733
+ },
+ {
+  "delta_sim": 0.23,
+  "speed": 1.5,
+  "blend_life": 1.2,
+  "measured": 1.0627942353714876,
+  "predicted": 1.0844817767049482
+ },
+ {
+  "delta_sim": 0.23,
+  "speed": 1.5,
+  "blend_life": 0.6,
+  "measured": 0.8818261176546569,
+  "predicted": 0.9168420593068803
+ }
+]

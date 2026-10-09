@@ -1,0 +1,86 @@
+--- a/gch/eval_offline.py	2026-10-09 12:51:17.329894951 +0300
++++ b/gch/eval_offline.py	2026-10-09 13:09:54.954197185 +0300
+@@ -39,6 +39,44 @@
+     return out
+ 
+ 
++def _planned_tempo(pred_abs: np.ndarray, true_abs: np.ndarray, mask: np.ndarray, j0: int = 2, j1: int = 17,
++                   moving: float = 0.15) -> dict:
++    """Offline tempo proxy: how far the plan travels over rows j0..j1 (0.5 s at 30 Hz) relative to
++    the demonstration, on frames where the demonstration is moving (> `moving` rad/s per group).
++    1.0 = the plan moves as fast as the demo; open-loop error is blind to this number."""
++    out = {}
++    dt = (j1 - j0) / 30.0
++    for name, sl in MODEL_GROUPS.items():
++        m = mask[:, sl].any(1)
++        if not m.any():
++            continue
++        dp = np.linalg.norm((pred_abs[:, j1, sl] - pred_abs[:, j0, sl]) * mask[:, sl], axis=1)
++        dd = np.linalg.norm((true_abs[:, j1, sl] - true_abs[:, j0, sl]) * mask[:, sl], axis=1)
++        sel = m & (dd / dt > moving)
++        if sel.sum() < 10:
++            continue
++        out[name] = {"plan_over_demo": float(dp[sel].sum() / dd[sel].sum()),
++                     "median_ratio": float(np.median(dp[sel] / dd[sel])), "frames": int(sel.sum())}
++    return out
++
++
++FINGERS = np.r_[34:40, 42:48]   # model layout: left fingers 34-39, right fingers 42-47
++
++
++def _finger_events(chunks: np.ndarray, thr: float = 0.01, window: int = 10) -> dict:
++    """What the adaptive-speed patch would see in these chunks: rows where any finger moves
++    more than `thr` rad between neighbouring rows (= a grasp/release event), and the share of rows
++    kept at 1x speed (within +-window rows of an event). On demonstrations the patch assumes
++    10-20 % of frames; on sampled plans jitter can flag almost everything."""
++    travel = np.abs(np.diff(chunks[:, :, FINGERS], axis=1)).max(-1)        # (N, H-1)
++    ev = travel > thr
++    slow = np.zeros(chunks.shape[:2], bool)
++    for j in np.argwhere(ev):
++        slow[j[0], max(0, j[1] + 1 - window): j[1] + 2 + window] = True
++    return {"rows_flagged": float(ev.mean()), "rows_kept_slow": float(slow.mean()),
++            "median_row_travel": float(np.median(travel))}
++
++
+ def evaluate_checkpoint(checkpoint: Path, data: Path, index: np.ndarray, *, data_config: str, overrides: dict,
+                         rows: list[int], batch_size: int, device: str, seed: int, prompt_source: str,
+                         workers: int = 4, precision: str | None = None) -> dict:
+@@ -54,7 +92,7 @@
+     pipe_out = output_pipeline(cfg, factory, stats_root)
+     ds = WBCTorchDataset(data, index, pipe_in, int(cfg.n_action_steps), prompt_source=prompt_source, random_prompt=False)
+     loader = torch.utils.data.DataLoader(ds, batch_size=batch_size, shuffle=False, num_workers=workers)
+-    errs, hold_errs, masks = [], [], []
++    errs, hold_errs, masks, preds, truths = [], [], [], [], []
+     with torch.no_grad():
+         for i, batch in enumerate(loader):
+             batch = to_device(batch, device)
+@@ -67,9 +105,14 @@
+             errs.append(np.abs(pred_abs - true_abs))
+             hold_errs.append(np.abs(_hold_pose(pipe_out, state, true_abs.shape) - true_abs))
+             masks.append(batch["action_loss_mask"].bool().cpu().numpy()[:, :50])
++            preds.append(pred_abs)
++            truths.append(true_abs)
+     err, hold_err, mask = np.concatenate(errs), np.concatenate(hold_errs), np.concatenate(masks)
+     return {"checkpoint": str(checkpoint), "samples": int(len(err)),
+-            "policy": _group_errors(err, mask, rows), "hold_pose": _group_errors(hold_err, mask, rows)}
++            "policy": _group_errors(err, mask, rows), "hold_pose": _group_errors(hold_err, mask, rows),
++            "planned_tempo": _planned_tempo(np.concatenate(preds), np.concatenate(truths), mask),
++            "finger_events": {"plans": _finger_events(np.concatenate(preds)),
++                              "demos": _finger_events(np.concatenate(truths))}}
+ 
+ 
+ def _hold_pose(pipe_out, state_norm: np.ndarray, shape) -> np.ndarray:
+@@ -129,6 +172,13 @@
+             h = r["hold_pose"][group]
+             cells = "  ".join(f"{k}={v[k]:.4f}/{h[k]:.4f}" for k in v)
+             print(f"  {group:16s} {cells}")
++        for group, v in r.get("planned_tempo", {}).items():
++            print(f"  tempo {group:10s} plan/demo={v['plan_over_demo']:.3f} (median {v['median_ratio']:.3f}, {v['frames']} frames)")
++        fe = r.get("finger_events")
++        if fe:
++            print(f"  finger events (adaptive-speed detector): plans flag {fe['plans']['rows_flagged']:.2f} of rows, "
++                  f"keep {fe['plans']['rows_kept_slow']:.2f} at 1x; demos {fe['demos']['rows_flagged']:.2f} / "
++                  f"{fe['demos']['rows_kept_slow']:.2f}")
+ 
+ 
+ if __name__ == "__main__":
